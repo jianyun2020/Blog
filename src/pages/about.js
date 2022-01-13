@@ -1,14 +1,15 @@
-import React from "react"
-import Layout from "../components/layout"
+// Step 1: Import React
+import React from 'react'
+import Layout from '../components/layout'
 
-const About = () => (
-  <Layout>
-    <h1>About Pandas Eating Lots</h1>
-    <p>
-      We're the only site running on your computer dedicated to showing the best
-      photos and videos of pandas eating lots of food.
-    </p>
-  </Layout>
-)
+// Step 2: Define your component
+const AboutPage = () => {
+  return (
+    <Layout pageTitle="About Me">
+      <p>Hi there! I'm the proud creator of this site, which I built with Gatsby.</p>
+    </Layout>
+  )
+}
 
-export default About
+// Step 3: Export your component
+export default AboutPage
