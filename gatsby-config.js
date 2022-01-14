@@ -9,5 +9,7 @@
     title: `Title from siteMetadata`
   },
   plugins: [
+    "gatsby-plugin-image",
+    "gatsby-plugin-sharp",
   ],
 }
