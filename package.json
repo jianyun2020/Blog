@@ -20,7 +20,11 @@
     "gatsby-plugin-image": "^2.5.1",
     "gatsby-plugin-mdx": "^3.5.1",
     "gatsby-plugin-sharp": "^4.5.1",
+    "gatsby-remark-images": "^6.5.1",
+    "gatsby-remark-prismjs": "^6.5.0",
     "gatsby-source-filesystem": "^4.5.1",
+    "gatsby-transformer-remark": "^5.5.1",
+    "prismjs": "^1.26.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "sharp": "^0.29.3"
