@@ -20,6 +20,7 @@
     "gatsby-plugin-image": "^2.5.1",
     "gatsby-plugin-mdx": "^3.5.1",
     "gatsby-plugin-sharp": "^4.5.1",
+    "gatsby-remark-autolink-headers": "^5.5.0",
     "gatsby-remark-images": "^6.5.1",
     "gatsby-remark-prismjs": "^6.5.0",
     "gatsby-source-filesystem": "^4.5.1",
