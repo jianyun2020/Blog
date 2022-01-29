@@ -11,17 +11,18 @@
     border-radius: 5px;
 
     .item-head {
-      align-items: center;
       display: flex;
       flex-direction: column;
 
       .item-title {
+        text-align: center;
+
         .scaleup {
+          display: inline-block;
           color: #444;
           font-weight: 700;
           font-size: 25px;
-          transform: scale(1);
-          transition: all 0.3s ease;
+          transition: 0.3s ease;
         }
 
         .scaleup:hover {
@@ -31,9 +32,24 @@
 
       .item-subtitle {
         display: flex;
-        margin-top: 5px;
+        justify-content: center;
+        margin-top: 10px;
         font-size: 12px;
+
+        span {
+          margin: 0 5px;
+        }
+
+        .item-published-time {
+          color: #00a7e0;
+          letter-spacing: 1px;
+        }
       }
     }
+
+    .item-body {
+      margin-top: 20px;
+    }
+
   }
 }

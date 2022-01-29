@@ -1,0 +1,30 @@
+---
+title: "TypeScript"
+date: "2021-07-25"
+hero_image: "./Images/3.jpg"
+hero_image_alt: "A white pitbull wearing big googly-eye glasses"
+hero_image_credit_text: "Jane Almon"
+hero_image_credit_link: "https://unsplash.com/photos/7rriIaBH6JY"
+---
+# 安装`TypeScript`
+
+```js
+npm install -g typescript
+
+// 查看版本检查是否成功
+tsc -v
+```
+
+# vscode自动编译
+
+```shell
+# 生成配置文件tsconfig.json
+tsc --init
+
+# 修改tsconfig.json配置
+"outDir": "./js"
+"strict": false
+
+# 启动监视任务
+终端 -> 运行任务 -> 监视tsconfig.json
+```

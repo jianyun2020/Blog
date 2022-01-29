@@ -8,6 +8,7 @@ h2 {
 
 body {
   background-color: #EFEFEF;
+  cursor: url("https://cdn.jsdelivr.net/gh/DIYgod/hexo-theme-sagiri/source/images/cursor.ico"),auto;
 }
 
 ul {
@@ -22,7 +23,7 @@ a {
 // Layout
 .wrapper-layout {
   position: absolute;
-  width: 100vw;
+  width: 100%;
   
   .wrapper-container {
     margin: auto;
