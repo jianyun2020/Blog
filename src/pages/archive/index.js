@@ -1,39 +1,17 @@
-import React from "react"
-import { Link, graphql } from "gatsby"
+// Step 1: Import React
+import React from 'react'
+import { StaticImage } from 'gatsby-plugin-image'
 
 
+// Step 2: Define your component
+const IndexPage = () => {
+  return (
+    <div>
+      <p>I'm making this by following the Gatsby Tutorial.</p>
+      <StaticImage alt="" src="../../assets/images/test.png" />
+    </div>
+  )
+}
 
-
-const BlogPage = ({ data }) => (
-  <div>
-    {
-      data.allMdx.nodes.map((node) => (
-        <article key={node.id}>
-          <h2>
-            <Link to={`/blog/${node.slug}`}>
-              {node.frontmatter.title}
-            </Link>
-          </h2>
-          <p>Posted: {node.frontmatter.date}</p>
-        </article>
-      ))
-    }
-  </div>
-)
-
-export const query = graphql`
-  query {
-    allMdx(sort: { fields: frontmatter___date, order: DESC }) {
-      nodes {
-        frontmatter {
-          date
-          title
-        }
-        id
-        slug
-      }
-    }
-  }
-`
-
-export default BlogPage
+// Step 3: Export your component
+export default IndexPage

@@ -21,7 +21,7 @@ const data = useStaticQuery(graphql`
     <div className='wrapper-layout'>
       <div className='wrapper-container'>
         <div className="wrapper-head-background">
-          <Head className="wrapper-head" title={data.site.siteMetadata.title}/>
+          <Head title={data.site.siteMetadata.title}/>
         </div>
         <main className="wrapper-body">
           {children}

@@ -1,0 +1,39 @@
+.wrapper-item {
+  width: 100%;
+
+  .item-article {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 40px;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 5px;
+
+    .item-head {
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+
+      .item-title {
+        .scaleup {
+          color: #444;
+          font-weight: 700;
+          font-size: 25px;
+          transform: scale(1);
+          transition: all 0.3s ease;
+        }
+
+        .scaleup:hover {
+          transform: scale(1.1);
+        }
+      }
+
+      .item-subtitle {
+        display: flex;
+        margin-top: 5px;
+        font-size: 12px;
+      }
+    }
+  }
+}
