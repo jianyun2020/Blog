@@ -5,41 +5,34 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 
 const BlogPost = ({ data }) => {
-  const image = getImage(data.mdx.frontmatter.hero_image)
+  const image = getImage(data.mdx.frontmatter.image)
 
   return (
     <div >
-      <p>{data.mdx.frontmatter.date}</p>
-      <GatsbyImage image={image} alt={data.mdx.frontmatter.hero_image_alt} />
-      <p>
-        Photo Credit:{" "}
-        <a href={data.mdx.frontmatter.hero_image_credit_link}>
-          {data.mdx.frontmatter.hero_image_credit_text}
-        </a>
-      </p>
+      <p>{data.mdx.frontmatter.Date}</p>
+      <GatsbyImage image={image} />
       <MDXRenderer>{data.mdx.body}</MDXRenderer>
     </div>
   )
 }
 
 export const query = graphql`
-  query ($id: String) {
-    mdx(id: { eq: $id }) {
-      frontmatter {
-        title
-        date(formatString: "MMMM D, YYYY")
-        hero_image_alt
-        hero_image_credit_link
-        hero_image_credit_text
-        hero_image {
-          childImageSharp {
-            gatsbyImageData
-          }
+query ($id: String) {
+  mdx(id: {eq: $id}) {
+    frontmatter {
+      Date(formatString: "MMMM D, YYYY")
+      LastEditTime
+      type
+      image {
+        childImageSharp {
+          gatsbyImageData
         }
       }
-      body
     }
+    body
   }
+}
+
 `
 
 export default BlogPost

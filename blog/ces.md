@@ -1,8 +1,8 @@
 ---
-Date: 2022-01-30 05:37:18
-LastEditTime: 2022-01-30 05:51:21
+Date: 2022-01-30 05:52:34
+LastEditTime: 2022-01-30 05:53:03
 image: ./Images/default.jpg
-type: Krpano
+type: JavaScript
 ---
 
 
