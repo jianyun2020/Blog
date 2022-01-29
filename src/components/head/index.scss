@@ -1,0 +1,25 @@
+.wrapper-head {
+  display: flex;
+  align-items: center;
+
+  .item-title {
+    font-weight: 700;
+    font-size: 28px;
+    color: #666666;
+  }
+  .list-item {
+    display: flex;
+    margin-left: 100px;
+
+    .item-link {
+      color: #666666;
+      margin-left: 40px;
+
+      .item-icon {
+        width: 40px;
+        height: 40px;
+        background-image: url(../../assets/images/home.svg);
+      }
+    }
+  }
+}
