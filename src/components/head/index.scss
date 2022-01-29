@@ -12,13 +12,44 @@
     margin-left: 100px;
 
     .item-link {
+      display: flex;
+      justify-content: center;
       color: #666666;
       margin-left: 40px;
 
+      &.active,
+      &:hover {
+        color: #F4EA2A;
+      }
+
       .item-icon {
-        width: 40px;
-        height: 40px;
+        display: block;
+        width: 20px;
+        height: 20px;
+        background-repeat: no-repeat;
+        background-size: contain;
+      }
+
+      &:nth-child(1) .item-icon {
         background-image: url(../../assets/images/home.svg);
+      }
+      &:nth-child(1) .item-icon.active,
+      &:nth-child(1):hover .item-icon {
+        background-image: url(../../assets/images/home-active.svg);
+      }
+      &:nth-child(2) .item-icon {
+        background-image: url(../../assets/images/archive.svg);
+      }
+      &:nth-child(2) .item-icon.active,
+      &:nth-child(2):hover .item-icon {
+        background-image: url(../../assets/images/archive-active.svg);
+      }
+      &:nth-child(3) .item-icon {
+        background-image: url(../../assets/images/about.svg);
+      }
+      &:nth-child(3) .item-icon.active,
+      &:nth-child(3):hover .item-icon {
+        background-image: url(../../assets/images/about-active.svg);
       }
     }
   }
