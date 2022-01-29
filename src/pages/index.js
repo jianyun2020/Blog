@@ -5,9 +5,9 @@ import React from 'react'
 // Step 2: Define your component
 const IndexPage = () => {
   return (
-      <div>
-        哈哈哈
-      </div>
+    <div>
+      Index
+    </div>
   )
 }
 

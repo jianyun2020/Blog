@@ -1,13 +1,15 @@
 .wrapper-head {
+  padding: 0 5px;
   display: flex;
-  align-items: center;
 
   .item-title {
+    align-items: center;
     font-weight: 700;
     font-size: 28px;
     color: #666666;
   }
   .list-item {
+    align-items: center;
     display: flex;
     margin-left: 100px;
 
@@ -15,7 +17,7 @@
       display: flex;
       justify-content: center;
       color: #666666;
-      margin-left: 40px;
+      margin-left: 60px;
 
       &.active,
       &:hover {

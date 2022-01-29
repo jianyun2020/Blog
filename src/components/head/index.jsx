@@ -13,7 +13,6 @@ class Head extends React.Component {
 
   changeStateHandler = (state) => {
     this.menuState = state
-    console.log(this.menuState)
   }
 
   render() {

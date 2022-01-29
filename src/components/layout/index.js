@@ -19,9 +19,11 @@ const data = useStaticQuery(graphql`
 
   return (
     <div className='wrapper-layout'>
-      <div className='container'>
-        <Head title={data.site.siteMetadata.title}/>
-        <main>
+      <div className='wrapper-container'>
+        <div className="wrapper-head-background">
+          <Head className="wrapper-head" title={data.site.siteMetadata.title}/>
+        </div>
+        <main className="wrapper-body">
           {children}
         </main>
       </div>
