@@ -1,6 +1,6 @@
 ---
 Date: 2022-02-12 05:58:15
-LastEditTime: 2022-02-12 20:35:06
+LastEditTime: 2022-02-12 21:43:48
 image: ./Images/default.jpg
 type: 面试
 ---
@@ -50,9 +50,21 @@ ancher：锚点（anchor）是网页内部的定位点，使用#加上锚点名�
 
 强制缓存就是向浏览器缓存查找该请求结果，并根据该结果的缓存规则来决定是否使用该缓存结果的过程。强缓存又分为两种`Expires`和`Cache-Control`
 
+![](Images/2022-02-12-21-40-31.png)
 
+#### Expires
 
+- 版本：HTTP/1.0
+- 来源：存在于服务端返回的响应头中
+- 语法：`Expires: Sun, 12 Jan 2022 21:42:00 GMT`
+- 缺点：服务器的时间和浏览器的时间可能并不一致导致失效
 
+#### Cache-Control
+
+- 版本：HTTP/1.0
+- 来源：响应头和请求头
+- 语法：`Cache-Control: max-age=3600`
+- 缺点：时间最终还是会失效
 
 
 
