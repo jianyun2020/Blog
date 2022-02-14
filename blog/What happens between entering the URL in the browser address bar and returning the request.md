@@ -2,7 +2,7 @@ d---
 Date: 2022-02-12 05:58:15
 LastEditTime: 2022-02-13 22:03:05
 image: ./Images/default.jpg
-type: 面试
+type: 面试|浏览器
 
 ---
 
@@ -655,7 +655,7 @@ HTTP 请求一般可以分为两类：静态资源和动态资源
 - 词法分析：发出的令牌转换成定义其属性和规则的“对象”
 - DOM 构建：最后，由于 HTML 标记定义不同标记之间的关系（一些标记包含在其它标记内），创建的对象链接在一个树数据结构内，此结构也会捕获原始标记中定义的父项-子项关系：HTML 对象是 body 对象的父项，body 是 paragraph 对象的父项，依此类推。
 
-## CSS 对象模型（CSSDOM）
+## CSS 对象模型（CSSOM）
 
 ```css
 body {
@@ -679,7 +679,7 @@ img {
 
 ## 布局树 Layout Tree
 
-- DOM 树与 CSSDOM 树合并形成渲染树
+- DOM 树与 CSSOM 树合并形成渲染树
 - 渲染树只包含渲染网页所需的节点
 - 布局计算每个对象的精确位置和大小
 - 最后一步是绘制，使用最终渲染树将像素渲染到屏幕上
@@ -723,6 +723,7 @@ img {
       }
       .will-change {
         background: #f12312;
+        will-change: transform;
       }
       .transform {
         background: #302912;
