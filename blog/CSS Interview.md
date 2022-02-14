@@ -1,6 +1,6 @@
 ---
 Date: 2022-02-12 05:58:15
-LastEditTime: 2022-02-14 13:59:10
+LastEditTime: 2022-02-14 23:42:28
 image: ./Images/default.jpg
 type: 面试|CSS
 ---
@@ -196,7 +196,326 @@ el.style.borderRight = "2px";
 
 因此，我们可以合并所有的改变然后依次处理，比如我们可以采取一下的方式：
 
-- 
+- 使用cssText
+
+```js
+const el = document.getElementById("div");
+el.style.cssText += "border-left: 1px; border-right: 2px; padding: 5px;";
+```
+
+- 修改CSS的class
+
+```js
+const el = document.getElementById("div");
+el.className += " active";
+```
+
+#### 批量修改DOM
+
+当我们需要对DOM对一系列修改的时候，可以通过以下步骤减少回流重绘次数：
+1. 使元素脱离文档流
+2. 对其进行多次修改
+3. 将元素带回到文档中
+
+该过程的第一步和第三部可能引起回流，但是经过第一步之后，对DOM的所有修改都不会引起回流重绘，因为它已经不在渲染树了。
+
+有三种方式可以让DOM脱离文档流：
+- 隐藏元素，应用修改，重新显示
+- 使用文档片段（document fragment）在当前DOM之外构建一个子树，再把它拷贝回文档
+- 将原始元素拷贝到一个脱离文档的节点中，修改节点后，再替换原始的元素
+
+考虑我们要执行一段批量插入节点的代码：
+
+```js
+function appendDataToElement(appendToElement, data) {
+  let li;
+  for (let i = 0; i < data.length; i++) {
+    li = document.createElement("li");
+    li.textContent = "text";
+    appendToElemnt.appendChild(li);
+  }
+}
+
+const ul = document.getElementById("list");
+appendDataToElement(ul, data);
+```
+
+如果我们直接这样执行的话，由于每次循环都会插入一个新的节点，会导致浏览器回流一次。
+
+我们可以使用这三种方式进行优化：
+
+1. 隐藏元素，应用修改，重新显示
+
+这个会在展示和隐藏节点的时候，产生两次回流
+
+```js
+function appendDataToElement(appendToElement, data) {
+  let li;
+  for (let i = 0; i < data.length; i++) {
+    li = document.createElement("li");
+    li.textContent = "text";
+    appendToElement.appendChild(li);
+  }
+}
+
+const ul = document.getElementById("list");
+ul.style.display = "none";
+appendDataToElement(ul, data);
+ul.style.display = "block";
+```
+
+2. 使用文档片段（document fragment）在当前DOM之外构建一个子树，再把它拷贝回文档
+
+```js
+const ul = document.getElementById("list");
+const fragment = document.createDocumentFragment();
+appendDataToElement(fragment, data);
+ul.appendChild(fragment);
+```
+
+3. 将原始元素拷贝到一个脱离文档流的节点中，修改节点后，再替换原始的元素
+
+```js
+const ul = document.getElementById('list');
+const clone = ul.cloneNode(true);
+appendDataToElement(clone, data);
+ul.parentNode.replaceChild(clone, ul);
+```
+
+#### 避免触发同步布局事件
+
+上文我们说过，当我们访问元素的一些属性的时候，会导致浏览器强制清空队列，进行强制同步布局。比如我们想将一个p标签数组的宽度赋值为一个元素的宽度，我们可能写出这样的代码：
+
+```js
+function initP() {
+  for (let i = 0; i < paragraphs.length; i++) {
+    paragraphs[i].style.width = box.offsetWidth + "px";
+  }
+}
+```
+
+这段代码看上去没有什么问题，可是其实会造成很大的性能问题。每次在循环的时候，都读取了box的一个offsetWidth属性值，然后利用它来更新p标签的width属性。这就导致了每一次循环的时候，浏览器都必须先使上一次循环中的样式更新操作生效，才能响应本次循环的样式读取操作。**每一次循环都会强制浏览器刷新队列**。我们可以优化为：
+
+```js
+const width = box.offsetWidth;
+function initP () {
+  for (let i = 0; i < paragraphs.length; i++) {
+    paragraphs[i].style.width = width + 'px';
+  }
+}
+```
+
+#### 对于复杂的动画效果，使用绝对定位让其脱离文档流
+
+对于复杂动画效果，由于会经常的引起回流重绘，因此，我们使用绝对定位，让它脱离文档流。否则会引起父元素以及后续元素频繁的回流。
+
+#### css3硬件加速（GPU加速）
+
+比起考虑如何减少回流重绘，我们更期望的是，根本不要回流重绘。这个时候，就需要css3硬件加速了
+
+1. 使用css3硬件加速，可以让`transfrom`、`opacity`、`filters`这些动画不会引起回流重绘
+2. 对于动画的其它属性，比如background-color这些，还是会引起回流重绘的，不过它还是可以提升这些动画的性能。
+
+**如何使用**
+
+常见的触发硬件加速的css属性：
+
+- transform
+- opacity
+- filters
+- will-change
+
+**css3硬件加速的坑**
+
+当然，任何美好的东西都是会有对应的代价的，过犹不及。css3硬件加速还是有坑的:
+
+- 如果你为太多元素使用css3硬件加速，会导致内存占用较大，会有性能问题
+- 在GPU渲染字体会导致抗锯齿无效。这是因为GPU和CPU的算法不同。因此如果你不在动画结束的时候关闭硬件加速，会产生字体模糊
+
+# 对BFC的理解
+
+BFC（Block Formatting Contexts）即块级格式上下文，根据盒模型可知，每个元素都被定义为一个矩形盒子，然而盒子的布局会受到**尺寸，定位，盒子的子元素或兄弟元素，视口的尺寸**等因素决定，所以这里有一个浏览器计算的过程，计算的规则就是由一个叫做**视觉格式化模型**的东西所定义的，BFC就是来自这个概念，它是CSS视觉渲染的一部分，**用于决定块级盒的布局及浮动相互影响范围的一个区域**。
+
+BFC具有一些特性：
+
+1. 块级元素会在垂直方向一个接一个的排列，和文档流的排列方式一致
+2. 在BFC中上下相邻的两个容器的`margin`会重叠，创建新的BFC可以避免外边距重叠
+3. 计算BFC的高度时，需要计算浮动元素的高度
+4. BFC区域不会与浮动的容器发生重叠
+5. BFC是独立的容器，容器内部元素不会影响外部元素
+6. 每个元素的左`margin`值和容器的左`border`相接触
+
+利用这些特性，我们可以解决以下问题：
+- 利用`4`和`6`，我们可以实现三栏（或两栏）自适应布局
+- 利用`2`，我们可以避免`margin`重叠问题
+- 利用`3`，我们可以避免高度塌陷
+
+创建BFC的方式：
+- 绝对定位元素（`position`为`absolute`或`fixed`）
+- 行内块元素，即`display`为`inline-block`
+- `overflow`的值不为`visible`
+
+## 视觉格式化模型
+
+**CSS视觉格式化模型**描述了盒子是怎样生成的，简单来说，它定义了盒子生成的计算规则，通过规则将文档元素转换为一个个盒子。
+
+每一个盒子的布局由`尺寸`、`类型`、`定位`、`盒子的子元素或兄弟元素`、`视口的尺寸和位置`等因素决定
+
+视觉格式化模型的计算，取决于一个矩形的边界，这个矩形边界，就是`包含块`（containing block），比如：
+
+```js
+<table>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+```
+
+上述代码片段中，`table`和`tr`都是包含块，`table`是`tr`的包含块，同时`tr`又是`td`的包含块
+
+需要注意的是，**盒子不受包含块的限制，当盒子的布局跑到包含块的外面时，就是我们说的溢出（overflow）**
+
+视觉格式化模型定义了盒（box）的生成，其中的盒主要包括了`块级盒`，`行内盒`和`匿名盒`
+
+
+### 块级元素
+
+`CSS`属性值`display`为`block`，`list-item`，`table`的元素
+
+### 块级盒
+
+块级盒具有以下特性：
+- `css`属性值`display`为`block`，`list-item`，`table`时，它就是块级元素
+- 视觉上，块级盒呈现竖直排列的块
+- 每个块级盒都会参与BFC的创建
+- 每个块级元素都会至少生成一个块级盒，称为主块级盒；一些元素可能会生成额外的块级盒，比如`<li>`，用来存放项目符号
+
+
+### 行内级元素
+
+CSS属性值`display`为`inline`，`inline-block`，`inline-table`的元素
+
+### 行内盒
+
+行内盒具有以下特性：
+- `CSS`属性值`display`为`inline`，`inline-block`，`inline-table`时，它就是行内级元素
+- 视觉上，行内盒与其它行内级元素排列为多行
+- 所有的可替换元素（`display`值为`inline`，如`<img>`, `<iframe>`, `<video>`, `<embed>`等）生成的盒都是行内盒，它们会参与`IFC`（行内格式化上下文）的创建
+- 所有的非可替换行内元素（`display`值为`inline-block`或`inline-table`）生成盒称为**原子行内级盒**，不参与`IFC`创建
+
+### 匿名盒
+
+匿名盒指不能被CSS选择器选中的盒子，比如：
+
+```html
+<div>
+  匿名盒1
+  <p>块盒</p>
+  匿名盒2
+</div>
+```
+
+上述代码片段中，`div`元素和`p`元素都会生成一个块级盒，`p`元素的前后会生成两个匿名盒
+
+匿名盒所有可继承的CSS属性值都为`inherit`，所有不可继承的CSS属性值都为`initial`
+
+![](Images/2022-02-14-22-18-50.png)
+
+## 定位方案
+
+**CSS页面布局技术**允许我们拾取网页中的元素，并且控制它们相对正常布局流（普通流）、周边元素、父容器或者主视口/窗口的位置。技术布局从宏观上来说受定位方案影响，定位方案包括`普通流`（Normal Flow，也叫常规流，正常布局流），`浮动`（Float），`定位技术`（Position）
+
+### 普通流
+
+浏览器默认的`HTML`布局方式，此时浏览器不对页面做任何布局控制
+
+当`position`为`static`或`relative`，并且`float`为`none`时会触发普通流，普通流有以下特性：
+- 普通流中，所有的盒一个接一个排列
+- `BFC`中，盒子会竖着排列
+- `IFC`中，盒子会横着排列
+- 静态定位中（`position`为`static`），盒的位置就是普通流里布局的位置
+- 相对定位中（`position`为`relative`），盒的偏移位置由`top`, `right`, `bottom`, `left`定义，**即使有偏移，仍然保留原有的位置，其它普通流不能占用这个位置）
+
+### 浮动
+
+ - 浮动定位中，盒称为浮动盒（Floating Box）
+ - 盒位于当前行的开头或结尾
+ - 普通流会环绕在浮动盒周围，除非设置`clear`属性
+
+### 定位技术
+
+1. 静态定位
+
+`position: static`：该关键字指定元素使用正常的布局行为，即元素在文档常规流中当前的布局位置，此时`top`, `right`, `bottom`, `left` 和 `z-index`属性无效
+
+2. 相对定位
+
+`position: relative`：该关键字下，元素先放置在未添加定位时的位置，再在不改变页面布局的前提下调整元素位置（因此会在此元素未添加定位时所在位置留下空白）。
+
+3. 绝对定位
+
+`position: absolute`：元素会被移出正常的文档流，并不为元素预留空间，通过指定元素相对于最近的非`static`定位祖先元素（因为默认所有元素都是static定位）的偏移，来确定元素的位置。绝对定位的元素可以设置外边距（margins），且不会与其它边距合并。
+
+4. 固定定位
+
+`position: fixed`： 元素会被移出正常文档流，并不为元素预留空间，而是通过指定元素相对于屏幕视口（viewport）的位置来指定元素位置。元素的位置在屏幕滚动时不会改变。打印时，元素会出现在每页的固定位置。`fixed`属性会创建新的层叠上下文。当元素祖先的`transform`, `perspective`或`filter`属性非`none`时，容器由视口改为该祖先。
+
+5. 粘性定位
+
+`position: sticky`：元素根据正常文档流进行定位，然后相对它最近*滚动祖先（nearest scrolling ancestor）*和containing block（最近块级祖先nearest block-level ancestor），包括table-related元素，基于`top`, `right`, `bottom`, `left`的值进行偏移。偏移值不会影响任何其它元素的位置。
+
+该值总是创建一个新的*层叠上下文（stacking context）*，注意，一个`sticky`元素会“固定”在离它最近的一个拥有“滚动机制”的祖先上（当该祖先的`overflow`是`hidden`, `scroll`, `auto` 或`overlay`时），即便这个祖先不是最近的真实可滚动祖先。这有效地抑制了任何"sticky"行为
+
+## BFC（块级格式上下文）
+
+通过对CSS盒模型，定位，布局等信息的了解，我们知道BFC这个概念其实来自于**视觉格式化模型**
+
+它是页面CSS视觉渲染的一部分，用于决定块级盒的布局及浮动相互影响范围的一个区域
+
+### BFC的创建
+
+一下元素会创建BFC:
+- 根元素（`<html>`）
+- 浮动元素（`float`不为`none`）
+- 绝对定位元素（`position`为`absolute`或`fixed`）
+- 表格的标题和单元格（`display`为`table-caption`，`table-cell`）
+- `overflow`的值不为`visible`的元素
+- 弹性元素（`display`为`flex`或`inline-flex`的元素的直接子元素）
+- 网格元素（`display`为`grid`或`inlien-grid`的元素的直接子元素）
+
+以上是 `CSS2.1` 规范定义的 `BFC` 触发方式，在最新的 `CSS3` 规范中，弹性元素和网格元素会创建 `F(Flex)FC` 和 `G(Grid)FC`。
+
+### BFC的范围
+
+BFC包含创建它的元素的所有子元素但是不包括创建了新的BFC的子元素的内部元素
+
+简单来说，子元素如果又创建了一个新的 BFC，那么它里面的内容就不属于上一个 BFC 了，这体现了 BFC 隔离 的思想，我们还是以 table 为例：
+
+```html
+<table>
+  <tr>
+    <td></td>
+  </tr>
+</table>
+```
+
+假设 table 元素创建的 BFC 我们记为 BFC_table，tr 元素创建的 BFC 记为 BFC_tr，根据规则，两个 BFC 的范围分别为：
+
+- BFC_tr：td 元素
+- BFC_table：只有 tr 元素，不包括 tr 里的 td 元素
+
+也就是所说，**一个元素不能同时存在于两个 BFC 中。**
+
+### BFC的特新
+
+BFC 除了会创建一个隔离的空间外，还具有以下特性：
+- BFC 内部的块级盒会在垂直方向上一个接一个排列 
+- 同一个 BFC 下的相邻块级元素可能发生外边距折叠，创建新的 BFC 可以避免的外边距折叠
+- 每个元素的外边距盒（margin box）的左边与包含块边框盒（border box）的左边相接触（从右向左的格式化，则相反），即使存在浮动也是如此
+- 浮动盒的区域不会和 BFC 重叠
+- 计算 BFC 的高度时，浮动元素也会参与计算
+
+
 
 # 参考链接
 
@@ -206,7 +525,7 @@ el.style.borderRight = "2px";
 
 [你真的了解回流和重绘吗](https://juejin.cn/post/6844903779700047885)
 
-
+[可能是最好的BFC解析了...](https://juejin.cn/post/6960866014384881671)
 
 
 
