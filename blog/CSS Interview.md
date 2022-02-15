@@ -1,6 +1,6 @@
 ---
 Date: 2022-02-12 05:58:15
-LastEditTime: 2022-02-15 08:37:14
+LastEditTime: 2022-02-15 10:15:24
 image: ./Images/default.jpg
 type: 面试|CSS
 ---
@@ -671,11 +671,62 @@ BFC 除了会创建一个隔离的空间外，还具有以下特性：
 }
 
 .right {
-  flex: 1;
+  flex: 1; /*相当于 flex: 1 1 0;*/
   height: 100%;
   background: lightseagreen;
 }
 ```
+
+4. 利用绝对定位，父级元素设为相对定位（`relative`）。左边元素`absoulute`定位，宽度固定。右边元素的`margin-left`的值设为左边元素的宽度值。
+
+```css
+.outer {
+  position: relative;
+  height: 100px;
+}
+
+.left {
+  postion: absolute;
+  width: 200px;
+  height: 100%;
+  background: lightcoral;
+}
+
+.right {
+  margin-left: 200px;
+  height: 100%;
+  background: lightseagreen;
+}
+```
+
+![](Images/2022-02-15-10-08-51.png)
+
+5. 利用绝对定位（`absolute`），父级元素设置相对定位（`relative`）。左边元素宽度固定，右边元素`absolute`定位，`left`为宽度大小，其余方向定位为`0`。
+
+```css
+.outer {
+	position: relative;
+	height: 200px;
+}
+
+.left {
+	width: 200px;
+	height: 100%;
+	background: lightcoral;
+}
+
+.right {
+	position: absolute;
+	left: 200px;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	height: 100%;
+	background: lightseagreen;
+}
+```
+
+![](Images/2022-02-15-10-15-23.png)
 
 # 参考链接
 
