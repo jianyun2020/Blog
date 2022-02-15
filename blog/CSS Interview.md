@@ -1,9 +1,44 @@
 ---
 Date: 2022-02-12 05:58:15
-LastEditTime: 2022-02-15 08:21:22
+LastEditTime: 2022-02-15 08:37:14
 image: ./Images/default.jpg
 type: 面试|CSS
 ---
+
+- [盒模型介绍](#盒模型介绍)
+- [CSS选择器和优先级](#css选择器和优先级)
+- [重排（reflow）和重绘（repaint）的理解](#重排reflow和重绘repaint的理解)
+  - [浏览器的渲染过程](#浏览器的渲染过程)
+    - [生成渲染树](#生成渲染树)
+    - [何时发生回流重绘](#何时发生回流重绘)
+    - [浏览器的优化机制](#浏览器的优化机制)
+    - [减少回流和重绘](#减少回流和重绘)
+      - [最小化重绘和重排](#最小化重绘和重排)
+      - [批量修改DOM](#批量修改dom)
+      - [避免触发同步布局事件](#避免触发同步布局事件)
+      - [对于复杂的动画效果，使用绝对定位让其脱离文档流](#对于复杂的动画效果使用绝对定位让其脱离文档流)
+      - [css3硬件加速（GPU加速）](#css3硬件加速gpu加速)
+- [对BFC的理解](#对bfc的理解)
+  - [视觉格式化模型](#视觉格式化模型)
+    - [块级元素](#块级元素)
+    - [块级盒](#块级盒)
+    - [行内级元素](#行内级元素)
+    - [行内盒](#行内盒)
+    - [匿名盒](#匿名盒)
+  - [定位方案](#定位方案)
+    - [普通流](#普通流)
+    - [浮动](#浮动)
+    - [定位技术](#定位技术)
+  - [BFC（块级格式上下文）](#bfc块级格式上下文)
+    - [BFC的创建](#bfc的创建)
+    - [BFC的范围](#bfc的范围)
+    - [BFC的特新](#bfc的特新)
+    - [BFC的应用](#bfc的应用)
+      - [自适应多栏布局](#自适应多栏布局)
+      - [防止外边距折叠](#防止外边距折叠)
+      - [清除浮动](#清除浮动)
+- [实现两栏布局（左侧固定+右侧自适应布局）](#实现两栏布局左侧固定右侧自适应布局)
+- [参考链接](#参考链接)
 
 # 盒模型介绍
 
@@ -564,7 +599,83 @@ BFC 除了会创建一个隔离的空间外，还具有以下特性：
 ![](Images/2022-02-15-08-21-21.png)
 
 
+# 实现两栏布局（左侧固定+右侧自适应布局）
 
+现在有以下DOM结构：
+
+```html
+<div class="outer">
+  <div class="left">左侧</div>
+  <div class="right">右侧</div>
+</div>
+```
+
+1. 利用浮动，左边元素宽度固定，设置向左浮动，将右边元素的`margin-left`设为固定宽度。注意，因为右边元素的`width`默认为`auto`，所以会自动撑满父元素。
+
+```css
+.outer {
+  height: 100px;
+}
+
+.left {
+  float: left;
+  width: 200px;
+  height: 100%;
+  background: lightcoral;
+}
+
+.right {
+  margin-left: 200px;
+  height: 100%;
+  background: lightseagreen;
+}
+```
+
+![](Images/2022-02-15-08-31-30.png)
+
+2. 同样利用浮动，左边元素宽度固定，设置向左浮动。右侧元素设置`overflow: hidden;`这样右边就触发了`BFC`，`BFC`的区域不会与浮动元素发生重叠，所以两侧就不会发生重叠。
+
+```css
+.outer {
+  height: 100px;
+}
+
+.left {
+  float: left;
+  width: 200px;
+  height: 100%;
+  background: lightcoral;
+}
+
+.right {
+  overflow: auto;
+  height: 100%;
+  background: lightseagreen;
+}
+```
+
+![](Images/2022-02-15-08-35-33.png)
+
+3. 利用`flex`布局，左边元素固定宽度，右边的元素设置为`flex: 1`。
+
+```css
+.outer {
+  display: flex;
+  height: 100px;
+}
+
+.left {
+  width: 200px;
+  height: 100%;
+  background: lightcoral;
+}
+
+.right {
+  flex: 1;
+  height: 100%;
+  background: lightseagreen;
+}
+```
 
 # 参考链接
 
