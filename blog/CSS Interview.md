@@ -1,6 +1,6 @@
 ---
 Date: 2022-02-12 05:58:15
-LastEditTime: 2022-02-15 18:21:59
+LastEditTime: 2022-02-15 18:52:43
 image: ./Images/default.jpg
 type: 面试|CSS
 ---
@@ -39,6 +39,8 @@ type: 面试|CSS
       - [清除浮动](#清除浮动)
 - [实现两栏布局（左侧固定+右侧自适应布局）](#实现两栏布局左侧固定右侧自适应布局)
 - [实现圣杯布局和双飞翼布局（经典三分栏布局）](#实现圣杯布局和双飞翼布局经典三分栏布局)
+  - [圣杯布局](#圣杯布局)
+  - [双飞翼布局](#双飞翼布局)
 - [参考链接](#参考链接)
 
 # 盒模型介绍
@@ -731,17 +733,105 @@ BFC 除了会创建一个隔离的空间外，还具有以下特性：
 
 # 实现圣杯布局和双飞翼布局（经典三分栏布局）
 
+圣杯布局和双飞翼布局的目的：
+
+- 三栏布局，中间一栏最先加载和渲染（内容最重要，这就是为什么还需要了解这种布局的原因）。
+- 两侧内容固定，中间内容随着宽度自适应。
+- 一般用于 PC 网页。
+
+圣杯布局和双飞翼布局的技术总结：
+
+- 使用 `float`  布局。
+- 两侧使用 `margin` 负值，以便和中间内容横向重叠。
+- 防止中间内容被两侧覆盖，圣杯布局用 `padding` ，双飞翼布局用 `margin` 。
+
+## 圣杯布局
+
+```html
+<div id="container" class="clearfix">
+  <p class="center">我是中间</p>
+  <p class="left">我是左边</p>
+  <p class="right">我是右边</p>
+</div>
+```
+
+```css
+#container {
+  padding-left: 200px;
+  padding-right: 150px;
+  overflow: auto;
+}
+#container p {
+  float: left;
+}
+.center {
+  width: 100%;
+  background-color: lightcoral;
+}
+.left {
+  width: 200px;
+  position: relative;
+  left: -200px;
+  margin-left: -100%;
+  background-color: lightcyan;
+}
+.right {
+  width: 150px;
+  margin-right: -150px;
+  background-color: lightgreen;
+}
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+```
+
+![](Images/2022-02-15-18-52-05.png)
+
+## 双飞翼布局
+
+```html
+<div id="main" class="float">
+  <div id="main-wrap">main</div>
+</div>
+<div id="left" class="float">left</div>
+<div id="right" class="float">right</div>
+
+```
+
+```css
+.float {
+  float: left;
+}
+#main {
+  width: 100%;
+  height: 200px;
+  background-color: lightpink;
+}
+#main-wrap {
+  margin: 0 190px 0 190px;
+}
+#left {
+  width: 190px;
+  height: 200px;
+  background-color: lightsalmon;
+  margin-left: -100%;
+}
+#right {
+  width: 190px;
+  height: 200px;
+  background-color: lightskyblue;
+  margin-left: -190px;
+}
+
+```
 
 
+![](Images/2022-02-15-18-51-20.png)
 
 
-
-
-
-
-
-
-
+**tips：上述代码中 `margin-left: -100%`  相对的是父元素的 `content`  宽度，即不包含 `paddig` 、 `border`  的宽度。**
 
 
 
