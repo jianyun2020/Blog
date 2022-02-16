@@ -1,6 +1,6 @@
 ---
 Date: 2022-02-12 05:58:15
-LastEditTime: 2022-02-16 17:42:34
+LastEditTime: 2022-02-16 18:23:41
 image: ./Images/default.jpg
 type: 面试|CSS
 ---
@@ -60,6 +60,9 @@ type: 面试|CSS
     - [flex-basis属性](#flex-basis属性)
     - [flex属性](#flex属性)
     - [align-self属性](#align-self属性)
+- [Grid网格布局](#grid网格布局)
+  - [基本概念](#基本概念-1)
+    - [容器和项目](#容器和项目)
 - [参考链接](#参考链接)
 
 # 盒模型介绍
@@ -1229,6 +1232,32 @@ Flex是Flexible Box的缩写，意为“弹性布局”，用来为盒状模型�
 该属性可能取6个值，除了auto，其它都与align-items属性完全一致。
 
 
+# Grid网格布局
+
+网格布局（Grid）是最强大的 CSS 布局方案。
+
+它将网页划分成一个个网格，可以任意组合不同的网格，做出各种各样的布局。
+
+![](Images/2022-02-16-18-15-19.png)
+
+上面这样的布局，就是Grid布局的拿手好戏。
+
+Grid 布局与 Flex 布局有一定的相似性，都可以指定容器内部多个项目的位置。但是，它们也存在重大区别。
+
+Flex 布局是轴线布局，只能指定"项目"针对轴线的位置，可以看作是**一维布局**。Grid 布局则是将容器划分成"行"和"列"，产生单元格，然后指定"项目所在"的单元格，可以看作是**二维布局**。Grid 布局远比 Flex 布局强大。
+
+## 基本概念
+
+### 容器和项目
+
+采用网格布局的区域，称为“容器”（container）。容器内部采用网格定位的子元素，称为“项目”（item）
+
+
+
+
+
+
+
 
 # 参考链接
 
@@ -1244,8 +1273,7 @@ Flex是Flexible Box的缩写，意为“弹性布局”，用来为盒状模型�
 
 [Flex 布局教程：语法篇](https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)
 
-
-
+[CSS Grid 网格布局教程](https://www.ruanyifeng.com/blog/2019/03/grid-layout-tutorial.html)
 
 
 
