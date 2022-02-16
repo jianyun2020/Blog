@@ -1,6 +1,6 @@
 ---
 Date: 2022-02-12 05:58:15
-LastEditTime: 2022-02-16 09:52:33
+LastEditTime: 2022-02-16 11:44:03
 image: ./Images/default.jpg
 type: 面试|CSS
 ---
@@ -42,6 +42,7 @@ type: 面试|CSS
   - [圣杯布局](#圣杯布局)
   - [双飞翼布局](#双飞翼布局)
 - [水平垂直居中的多种实现方式](#水平垂直居中的多种实现方式)
+  - [图片定高|不定高水平垂直居中](#图片定高不定高水平垂直居中)
 - [参考链接](#参考链接)
 
 # 盒模型介绍
@@ -872,6 +873,76 @@ BFC 除了会创建一个隔离的空间外，还具有以下特性：
 
 3. 利用绝对定位，设置`left: 50%`和`top: 50%`先将子元素移到父元素中心位置，然后再通过`margin-left`和`margin-top`以子元素自己的一半宽高进行负值赋值。该方法**必须定宽高**
 
+```css
+.father {
+  position: relative;
+}
+
+.son {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 200px;
+  height: 200px;
+  margin-left: -100px;
+  margin-top: -100px;
+}
+```
+
+4. 利用`flex`
+
+```css
+.father {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+```
+
+5. 利用`grid`布局
+
+```css
+.father {
+  display: grid;
+}
+
+.son {
+  margin: auto;
+}
+```
+
+## 图片定高|不定高水平垂直居中
+
+1. `display: table-cell`
+
+```css
+.parent {
+  display: table-cell;
+  text-align: center;
+  vertical-align: middle;
+  font-size: 0;
+}
+```
+
+2. `::after` 或`::before`
+
+```css
+.parent {
+  text-align: center;
+}
+
+.parent::after { /*::befores*/
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+
+img {
+  vertical-align: middle;
+}
+```
+
 
 
 
@@ -886,7 +957,7 @@ BFC 除了会创建一个隔离的空间外，还具有以下特性：
 
 [可能是最好的BFC解析了...](https://juejin.cn/post/6960866014384881671)
 
-
+[面试官：你能实现多少种水平垂直居中的布局（定宽高和不定宽高）](https://juejin.cn/post/6844903982960214029#comment)
 
 
 
