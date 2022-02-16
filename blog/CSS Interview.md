@@ -1,6 +1,6 @@
 ---
 Date: 2022-02-12 05:58:15
-LastEditTime: 2022-02-15 18:52:43
+LastEditTime: 2022-02-16 09:52:33
 image: ./Images/default.jpg
 type: 面试|CSS
 ---
@@ -41,6 +41,7 @@ type: 面试|CSS
 - [实现圣杯布局和双飞翼布局（经典三分栏布局）](#实现圣杯布局和双飞翼布局经典三分栏布局)
   - [圣杯布局](#圣杯布局)
   - [双飞翼布局](#双飞翼布局)
+- [水平垂直居中的多种实现方式](#水平垂直居中的多种实现方式)
 - [参考链接](#参考链接)
 
 # 盒模型介绍
@@ -832,6 +833,45 @@ BFC 除了会创建一个隔离的空间外，还具有以下特性：
 
 
 **tips：上述代码中 `margin-left: -100%`  相对的是父元素的 `content`  宽度，即不包含 `paddig` 、 `border`  的宽度。**
+
+# 水平垂直居中的多种实现方式
+
+1. 利用绝对定位，设置`left: 50%`和`top: 50%`先将子元素左上角移到父元素中心位置，然后再通过`translate`来调整子元素的中心点到父元素的中心。该方法可以**不定宽高**
+
+```css
+.father {
+  position: relative;
+}
+
+.son {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+```
+
+2. 利用绝对定位，子元素的所有方向都为`0`，将`margin`设置为`auto`，由于宽高固定，对应方向实现平分，该方法必须**盒子有宽高**
+
+```css
+.father {
+  position: relative;
+}
+
+.son {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  height: 100px;
+  width: 100px;
+}
+```
+
+3. 利用绝对定位，设置`left: 50%`和`top: 50%`先将子元素移到父元素中心位置，然后再通过`margin-left`和`margin-top`以子元素自己的一半宽高进行负值赋值。该方法**必须定宽高**
+
 
 
 
