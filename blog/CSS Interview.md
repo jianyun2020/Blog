@@ -1,6 +1,6 @@
 ---
 Date: 2022-02-12 05:58:15
-LastEditTime: 2022-02-16 11:44:03
+LastEditTime: 2022-02-16 11:51:10
 image: ./Images/default.jpg
 type: 面试|CSS
 ---
@@ -43,6 +43,7 @@ type: 面试|CSS
   - [双飞翼布局](#双飞翼布局)
 - [水平垂直居中的多种实现方式](#水平垂直居中的多种实现方式)
   - [图片定高|不定高水平垂直居中](#图片定高不定高水平垂直居中)
+- [flex布局](#flex布局)
 - [参考链接](#参考链接)
 
 # 盒模型介绍
@@ -943,7 +944,9 @@ img {
 }
 ```
 
+# flex布局
 
+flex是
 
 
 
@@ -959,7 +962,7 @@ img {
 
 [面试官：你能实现多少种水平垂直居中的布局（定宽高和不定宽高）](https://juejin.cn/post/6844903982960214029#comment)
 
-
+[Flex 布局教程：语法篇](https://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)
 
 
 
