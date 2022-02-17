@@ -10,7 +10,7 @@ const Index = ({ data }) => (
       <article className="item-article" key={node.id}>
         <section className="item-head">
           <h2 className="item-title">
-            <Link className="scaleup" to={`/${node.slug.toLowerCase()}`}>{node.slug}</Link>
+            <Link className="scaleup" to={`/${node.slug.toLowerCase()}`}>{node.frontmatter.title}</Link>
           </h2>
           <div className="item-subtitle">
             <span className="item-published-time">发表于 {node.frontmatter.Date}</span>
@@ -37,6 +37,7 @@ query {
       frontmatter {
         Date(formatString: "YYYY-MM-DD")
         LastEditTime(formatString: "YYYY-MM-DD")
+        title
         type
       }
       wordCount {

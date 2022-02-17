@@ -1,7 +1,8 @@
 ---
 Date: 2022-01-30 05:37:18
-LastEditTime: 2022-01-30 05:51:21
+LastEditTime: 2022-02-17 11:37:01
 image: ./Images/default.jpg
+title: "Krpano Plugin Interface"
 type: Krpano
 ---
 

@@ -1,7 +1,8 @@
 ---
 Date: 2022-02-12 05:58:15
-LastEditTime: 2022-02-16 18:23:41
+LastEditTime: 2022-02-17 11:36:12
 image: ./Images/default.jpg
+title: "CSS面试"
 type: 面试|CSS
 ---
 
@@ -50,7 +51,7 @@ type: 面试|CSS
     - [flex-direction属性](#flex-direction属性)
     - [flex-wrap属性](#flex-wrap属性)
     - [flex-flow属性](#flex-flow属性)
-    - [`justify-content`属性](#justify-content属性)
+    - [justify-content属性](#justify-content属性)
     - [align-items属性](#align-items属性)
     - [align-content属性](#align-content属性)
   - [项目的属性](#项目的属性)
@@ -1068,7 +1069,7 @@ Flex是Flexible Box的缩写，意为“弹性布局”，用来为盒状模型�
 }
 ```
 
-### `justify-content`属性
+### justify-content属性
 
 `justify-content`属性定义了项目在主轴上的对齐方式。
 
