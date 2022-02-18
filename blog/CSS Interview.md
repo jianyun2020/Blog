@@ -1,6 +1,6 @@
 ---
 Date: 2022-02-12 05:58:15
-LastEditTime: 2022-02-17 16:18:09
+LastEditTime: 2022-02-18 11:50:06
 image: ./Images/default.jpg
 title: "CSS面试"
 type: 面试|CSS
@@ -70,6 +70,7 @@ type: 面试|CSS
   - [容器属性](#容器属性-1)
     - [display属性](#display属性)
     - [grid-template-columns属性，grid-template-rows属性](#grid-template-columns属性grid-template-rows属性)
+    - [grid-row=gap属性，grid-column-gap属性，grid-gap属性](#grid-rowgap属性grid-column-gap属性grid-gap属性)
 - [参考链接](#参考链接)
 
 # 盒模型介绍
@@ -1477,6 +1478,18 @@ grid-template-columns: 100px auto 100px;
   grid-template-columns: repeat(12, 1fr)
 }
 ```
+
+### grid-row=gap属性，grid-column-gap属性，grid-gap属性
+
+`grid-row-gap`属性设置行与行的间隔（行间距），`grid-column-gap`属性设置列与列的间隔（列间距）
+
+```css
+.container {
+  grid-row-gap: 20px;
+  grid-column-gap: 20px;
+}
+```
+
 
 
 
