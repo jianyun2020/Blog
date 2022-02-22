@@ -16,12 +16,13 @@
     .item-link {
       display: flex;
       justify-content: center;
+      align-items: center;
       color: #666666;
       margin-left: 60px;
 
       &.active,
       &:hover {
-        color: #F4EA2A;
+        color: rgb(142, 19, 151);
       }
 
       .item-icon {

@@ -1,0 +1,27 @@
+.wrapper-child {
+  margin-top: -40vh;
+  padding-top: 40vh;
+  background-color: #fff;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  .side-head {
+    position: sticky;
+    top: 10vh;
+    right: -20vh;
+    box-sizing: border-box;
+    margin-right: -320px;
+    width:  300px;
+    padding: 10px;
+    background-color: #fff;
+
+    .navigate-head {
+      display: block;
+      color: #212121;
+
+      &:hover {
+        color: #9b3ba9;
+      }
+    }
+  }
+}
