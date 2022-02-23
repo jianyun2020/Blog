@@ -7,21 +7,42 @@
 
   .side-head {
     position: sticky;
-    top: 10vh;
-    right: -20vh;
+    float: right;
     box-sizing: border-box;
     margin-right: -320px;
-    width:  300px;
-    padding: 10px;
     background-color: #fff;
+    padding: 10px;
+    top: 25vh;
+    display: block;
+    width: 300px;
+    max-height: 50vh;
+    white-space: nowrap;
+    scrollbar-width: none; /* firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+    overflow-x: hidden;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      display: none; /* Chrome Safari */
+    }
 
     .navigate-head {
       display: block;
       color: #212121;
+      overflow-x: hidden;
+      text-overflow: ellipsis;
+
 
       &:hover {
         color: #9b3ba9;
       }
+
+      &.active {
+        color: #9b3ba9;
+      }
+    }
+
+    .navigate-child {
+      padding-left: 15px;
     }
   }
 }
