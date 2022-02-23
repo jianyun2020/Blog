@@ -1,6 +1,6 @@
 ---
 Date: 2022-02-23 16:49:08
-LastEditTime: 2022-02-23 17:22:50
+LastEditTime: 2022-02-24 06:28:03
 image: ./Images/default.jpg
 title: JS面试  
 type: JavaScript|面试
@@ -67,4 +67,17 @@ console.log(typeof {}); // object
 console.log(typeof null); // object
 ```
 
-- 
+- instanceof：能判断**对象**类型，不能判断基本数据类型，**其内部运行机制是判断在其原型链中能否找到该类型的原型**。
+
+```js
+class People {}
+class Student extends People {}
+
+const s1 = new Student();
+
+console.log(s1 instanceof People); // true
+console.log(s1 instanceof Student); // true
+```
+
+顺着**原型链**找，如果能找到对应的`xxx.prototype`即为`true`。比如这里的`s1`作为实例，顺着原型链能找到`Student.prototype`及`People.prototype`。
+
