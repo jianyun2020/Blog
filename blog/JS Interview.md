@@ -1,6 +1,6 @@
 ---
 Date: 2022-02-23 16:49:08
-LastEditTime: 2022-02-24 18:03:21
+LastEditTime: 2022-02-24 20:06:19
 image: ./Images/default.jpg
 title: JS面试  
 type: JavaScript|面试
@@ -284,9 +284,26 @@ function deepCopy(target, map = new Map()) {
 
 > `WeakMap` 对象是一组键/值对的集合，其中的键是**弱引用**的。其**键必须是对象**，而值可以是任意的。在计算机程序设计中，弱引用与强引用相对，是指不能确保其引用的对象不会被垃圾回收器回收的引用。 一个对象若只被弱引用所引用，则被认为是不可访问（或弱可访问）的，并因此可能在任何时刻被回收。
 
+## 终版
+
 ```js
 function deepCopy(target, map = new WeakMap()) {
-    // ...
+    if (typeof obj === "object") {
+      let copyTarget = Array.isArray(target) ? [] : {};
+      if (map.get(target)) {
+        return map.get(target);
+      }
+      map.set(target, copyTarget);
+      for (const key in target) {
+        if (target.hasOwnProperty(key)) { // 保证key不是原型属性
+          copyTarget[key] = deepCopy(target[key], map);
+        }
+      }
+
+      return copyTarget;
+    } else {
+      return target;
+    }
 };
 ```
 
