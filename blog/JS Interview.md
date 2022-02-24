@@ -1,6 +1,6 @@
 ---
 Date: 2022-02-23 16:49:08
-LastEditTime: 2022-02-24 06:28:03
+LastEditTime: 2022-02-24 08:18:02
 image: ./Images/default.jpg
 title: JS面试  
 type: JavaScript|面试
@@ -80,4 +80,29 @@ console.log(s1 instanceof Student); // true
 ```
 
 顺着**原型链**找，如果能找到对应的`xxx.prototype`即为`true`。比如这里的`s1`作为实例，顺着原型链能找到`Student.prototype`及`People.prototype`。
+
+- Object.prototype.toString.call()：所有原始数据类型都能判断，还有**Error对象，Date对象**等。
+
+```js
+Object.prototype.toString.call(2); // "[object Number]"
+Object.prototype.toString.call(""); // "[object String]"
+Object.prototype.toString.call(true); // "[object Boolean]"
+Object.prototype.toString.call(undefined); // "[object Undefined]"
+Object.prototype.toString.call(null); // "[object Null]"
+Object.prototype.toString.call(Math); // "[object Math]"
+Object.prototype.toString.call({}); // "[object Object]"
+Object.prototype.toString.call([]); // "[object Array]"
+Object.prototype.toString.call(function () {}); // "[object Function]"
+```
+
+**在面试中有一个经常被问的问题就是：如何判断变量是否为数组？**
+
+```js
+Array.isArray(arr); // true
+arr.__proto__ === Array.prototype; // true
+arr instanceof Array; // true
+Object.prototype.toString.call(arr); // "[object Array]"
+```
+
+# 手写深拷贝
 
