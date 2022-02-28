@@ -1,6 +1,6 @@
 ---
 Date: 2022-02-23 16:49:08
-LastEditTime: 2022-02-26 07:29:57
+LastEditTime: 2022-02-28 18:05:46
 image: ./Images/default.jpg
 title: JS面试  
 type: JavaScript|面试
@@ -533,6 +533,61 @@ function add(a, b) {
   const bigRes = (bigA + bigB) / base;
 }
 ```
+
+2. 使用`Number.EPSILON`误差范围
+
+```js
+function isEqual(a, b) {
+  return Math.abs(a - b) < Number.EPSILON;
+}
+
+console.log(isEqual(0.1 + 0.2, 0.3)); // true
+```
+
+`Number.EPSILON` 的实质是一个可以接受的最小误差范围，一般来说为 `Math.pow(2, -52)` 。​
+
+
+3. 转成字符串，对字符串做加法运算。
+
+```js
+function addStrings(num1, num2) {
+  let i = num1.length - 1;
+  let j = num2.length - 1;
+  let res = [];
+  let carry = 0;
+
+  while(i >= 0 || j >= 0) {
+    const n1 = i >= 0 ? Number(num1[i]) : 0;
+    const n2 = j >= 0 ? Number(num2[j]) : 0;
+    const sum = n1 + n2 + carry;
+    res.unshift(sum % 10);
+    carry = Math.floor(sum / 10);
+    i--;
+    j--;
+  }
+
+  if (carry) {
+    res.unshift(carry);
+  }
+
+  return res.join("");
+}
+
+
+function isEqual(a, b, sum) {
+  const [intStr1, deciStr1] = a.toString().split(".");
+  const [intStr2, deciStr2] = b.toString().split(".");
+  const inteSum = addStrings(intStr1, intStr2); // 获取整数相加部分
+  const deciSum = addStrings(deciStr1, deciStr2); // 获取小数相加部分
+  return inteSum + "." + deciSum === String(sum);
+}
+
+console.log(isEqual(0.1, 0.2, 0.3)); // true
+```
+
+
+
+
 
 
 # 参考链接
