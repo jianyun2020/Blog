@@ -1,6 +1,6 @@
 ---
 Date: 2022-03-03 14:55:29
-LastEditTime: 2022-03-03 18:34:33
+LastEditTime: 2022-03-04 10:07:16
 image: ./Images/default.jpg
 title: 前端模块化
 type: 模块化|面试
@@ -150,3 +150,50 @@ module2() //module2
 module3.foo() //foo() module3
 console.log(uniq(module3.arr)) //[ 1, 2, 3 ]
 ```
+
+5. 通过node运行app.js
+
+命令行输入`node app.js`，运行JS文件
+
+6. 浏览器端实现（借助Browserify）
+
+- 创建项目结构
+
+```js
+|-js
+  |-dist //打包生成文件的目录
+  |-src //源码所在的目录
+    |-module1.js
+    |-module2.js
+    |-module3.js
+    |-app.js //应用主源文件
+|-index.html //运行于浏览器上
+|-package.json
+  {
+    "name": "browserify-test",
+    "version": "1.0.0"
+  }
+
+```
+
+- 下载browserify
+
+```js
+// 全局
+npm install -g browserify
+
+// 局部
+npm install browserify --save-dev
+```
+
+- 定义模块代码（同服务端）
+
+*注意：index.html文件要运行在浏览器上，需要借助browserify将app.js文件打包编译，如果直接在index.html引入app.js就会报错！*
+
+- 打包处理js
+
+根目录下运行`browserify js/src/app.js -o js/dist/bundle.js`
+
+- 页面使用引入
+
+在index.html文件中引入`<script type="text/javascript" src="js/dist/bundle.js"></script>
